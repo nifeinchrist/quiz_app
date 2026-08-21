@@ -8,6 +8,8 @@ class ResultScreen extends StatefulWidget {
   final int totalQuestions;
   final List<Question> questions;
   final List<int?> userAnswers;
+  final String username;
+  final int age;
 
   const ResultScreen({
     super.key,
@@ -15,6 +17,8 @@ class ResultScreen extends StatefulWidget {
     required this.totalQuestions,
     required this.questions,
     required this.userAnswers,
+    required this.username,
+    required this.age,
   });
 
   @override
@@ -26,6 +30,7 @@ class _ResultScreenState extends State<ResultScreen> {
 
   int get stars {
     final percentage = (widget.score / widget.totalQuestions) * 100;
+
     if (percentage >= 85) return 3;
     if (percentage >= 60) return 2;
     return 1;
@@ -65,9 +70,10 @@ class _ResultScreenState extends State<ResultScreen> {
                   color: Colors.deepPurple,
                 ),
               ),
+
               const SizedBox(height: 8),
 
-              // Star Rating Display
+              // Star Rating
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: List.generate(3, (index) {
@@ -76,16 +82,22 @@ class _ResultScreenState extends State<ResultScreen> {
                     child: Icon(
                       Icons.star_rounded,
                       size: 52,
-                      color: index < stars ? Colors.amber : Colors.grey.shade300,
+                      color: index < stars
+                          ? Colors.amber
+                          : Colors.grey.shade300,
                     ),
                   );
                 }),
               ),
 
               const SizedBox(height: 16),
+
               // Feedback Banner
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 12,
+                ),
                 decoration: BoxDecoration(
                   color: Colors.deepPurple.shade50,
                   borderRadius: BorderRadius.circular(20),
@@ -130,7 +142,9 @@ class _ResultScreenState extends State<ResultScreen> {
                             value: widget.score / widget.totalQuestions,
                             strokeWidth: 12,
                             backgroundColor: Colors.grey.shade200,
-                            valueColor: const AlwaysStoppedAnimation<Color>(Colors.deepPurple),
+                            valueColor: const AlwaysStoppedAnimation<Color>(
+                              Colors.deepPurple,
+                            ),
                           ),
                         ),
                         Column(
@@ -156,7 +170,9 @@ class _ResultScreenState extends State<ResultScreen> {
                         ),
                       ],
                     ),
+
                     const SizedBox(height: 20),
+
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
@@ -192,11 +208,18 @@ class _ResultScreenState extends State<ResultScreen> {
                             _showReview = !_showReview;
                           });
                         },
-                        icon: Icon(_showReview ? Icons.visibility_off : Icons.visibility),
-                        label: Text(_showReview ? 'HIDE REVIEW' : 'REVIEW ANSWERS'),
+                        icon: Icon(
+                          _showReview ? Icons.visibility_off : Icons.visibility,
+                        ),
+                        label: Text(
+                          _showReview ? 'HIDE REVIEW' : 'REVIEW ANSWERS',
+                        ),
                         style: OutlinedButton.styleFrom(
                           foregroundColor: Colors.deepPurple,
-                          side: const BorderSide(color: Colors.deepPurple, width: 2),
+                          side: const BorderSide(
+                            color: Colors.deepPurple,
+                            width: 2,
+                          ),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(26),
                           ),
@@ -204,7 +227,10 @@ class _ResultScreenState extends State<ResultScreen> {
                       ),
                     ),
                   ),
+
                   const SizedBox(width: 12),
+
+                  // PLAY AGAIN
                   Expanded(
                     child: SizedBox(
                       height: 52,
@@ -213,7 +239,10 @@ class _ResultScreenState extends State<ResultScreen> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const QuizScreen(),
+                              builder: (context) => QuizScreen(
+                                username: widget.username,
+                                age: widget.age,
+                              ),
                             ),
                           );
                         },
@@ -237,11 +266,18 @@ class _ResultScreenState extends State<ResultScreen> {
               ),
 
               const SizedBox(height: 12),
+
+              // Back to Main Menu
               TextButton.icon(
                 onPressed: () {
                   Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (context) => const WelcomeScreen()),
+                    MaterialPageRoute(
+                      builder: (context) => WelcomeScreen(
+                        username: widget.username,
+                        age: widget.age,
+                      ),
+                    ),
                     (route) => false,
                   );
                 },
@@ -258,6 +294,7 @@ class _ResultScreenState extends State<ResultScreen> {
               // Review Section
               if (_showReview) ...[
                 const SizedBox(height: 24),
+
                 const Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
@@ -269,10 +306,16 @@ class _ResultScreenState extends State<ResultScreen> {
                     ),
                   ),
                 ),
+
                 const SizedBox(height: 12),
+
                 ...List.generate(widget.questions.length, (i) {
                   final q = widget.questions[i];
-                  final userAns = i < widget.userAnswers.length ? widget.userAnswers[i] : null;
+
+                  final userAns = i < widget.userAnswers.length
+                      ? widget.userAnswers[i]
+                      : null;
+
                   final isCorrect = userAns == q.correctAnswerIndex;
 
                   return Container(
@@ -282,7 +325,9 @@ class _ResultScreenState extends State<ResultScreen> {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(16),
                       border: Border.all(
-                        color: isCorrect ? Colors.green.shade300 : Colors.red.shade300,
+                        color: isCorrect
+                            ? Colors.green.shade300
+                            : Colors.red.shade300,
                         width: 1.5,
                       ),
                     ),
@@ -296,7 +341,9 @@ class _ResultScreenState extends State<ResultScreen> {
                               color: isCorrect ? Colors.green : Colors.red,
                               size: 20,
                             ),
+
                             const SizedBox(width: 8),
+
                             Expanded(
                               child: Text(
                                 'Q${i + 1}: ${q.questionText}',
@@ -308,14 +355,19 @@ class _ResultScreenState extends State<ResultScreen> {
                             ),
                           ],
                         ),
+
                         const SizedBox(height: 8),
+
                         Text(
                           'Your Answer: ${userAns != null ? q.options[userAns] : 'Not answered'}',
                           style: TextStyle(
-                            color: isCorrect ? Colors.green.shade800 : Colors.red.shade800,
+                            color: isCorrect
+                                ? Colors.green.shade800
+                                : Colors.red.shade800,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
+
                         if (!isCorrect)
                           Text(
                             'Correct Answer: ${q.options[q.correctAnswerIndex]}',
@@ -324,7 +376,9 @@ class _ResultScreenState extends State<ResultScreen> {
                               fontWeight: FontWeight.w600,
                             ),
                           ),
+
                         const SizedBox(height: 4),
+
                         Text(
                           '💡 ${q.explanation}',
                           style: TextStyle(
@@ -353,7 +407,9 @@ class _ResultScreenState extends State<ResultScreen> {
     return Row(
       children: [
         Icon(icon, color: color, size: 28),
+
         const SizedBox(width: 8),
+
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -367,10 +423,7 @@ class _ResultScreenState extends State<ResultScreen> {
             ),
             Text(
               label,
-              style: TextStyle(
-                fontSize: 12,
-                color: Colors.grey.shade600,
-              ),
+              style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
             ),
           ],
         ),

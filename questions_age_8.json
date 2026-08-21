@@ -1,0 +1,247 @@
+[
+  {
+    "id": "q1",
+    "questionText": "Which word is spelled correctly?",
+    "options": ["Beautiful", "Beatiful", "Beautifull", "Bautiful"],
+    "correctAnswerIndex": 0,
+    "explanation": "Beautiful is spelled B-E-A-U-T-I-F-U-L!",
+    "category": "Spelling"
+  },
+  {
+    "id": "q2",
+    "questionText": "What is the plural of 'mouse'?",
+    "options": ["mouses", "mice", "mices", "mousees"],
+    "correctAnswerIndex": 1,
+    "explanation": "More than one mouse are called mice!",
+    "category": "Plurals"
+  },
+  {
+    "id": "q3",
+    "questionText": "Choose the correct pronoun: 'She gave the book to ___.'",
+    "options": ["he", "him", "his", "himself"],
+    "correctAnswerIndex": 1,
+    "explanation": "'Him' is the correct object pronoun to use here.",
+    "category": "Pronouns"
+  },
+  {
+    "id": "q4",
+    "questionText": "Choose the correct word: 'I could ___ the birds singing.'",
+    "options": ["here", "hear", "hair", "hare"],
+    "correctAnswerIndex": 1,
+    "explanation": "We use our ears to 'hear' sounds!",
+    "category": "Homophones"
+  },
+  {
+    "id": "q5",
+    "questionText": "Which word means the same as 'happy'?",
+    "options": ["sad", "angry", "cheerful", "sleepy"],
+    "correctAnswerIndex": 2,
+    "explanation": "'Cheerful' means feeling or showing happiness!",
+    "category": "Synonyms"
+  },
+  {
+    "id": "q6",
+    "questionText": "What is the opposite of 'sharp'?",
+    "options": ["dull", "pointy", "hard", "rough"],
+    "correctAnswerIndex": 0,
+    "explanation": "Something that is not sharp is dull.",
+    "category": "Antonyms"
+  },
+  {
+    "id": "q7",
+    "questionText": "Which word is a proper noun (must start with a capital letter)?",
+    "options": ["London", "city", "street", "house"],
+    "correctAnswerIndex": 0,
+    "explanation": "'London' is the name of a specific city, so it is a proper noun!",
+    "category": "Nouns"
+  },
+  {
+    "id": "q8",
+    "questionText": "Identify the adjective in the sentence: 'The little kitten slept.'",
+    "options": ["The", "little", "kitten", "slept"],
+    "correctAnswerIndex": 1,
+    "explanation": "'Little' describes the size of the kitten, so it is an adjective!",
+    "category": "Adjectives"
+  },
+  {
+    "id": "q9",
+    "questionText": "Choose the sentence with correct punctuation.",
+    "options": [
+      "where are you going.",
+      "Where are you going?",
+      "Where are you going!",
+      "where are you going,"
+    ],
+    "correctAnswerIndex": 1,
+    "explanation": "Asking a question must begin with a capital letter and end with a question mark (?)!",
+    "category": "Punctuation"
+  },
+  {
+    "id": "q10",
+    "questionText": "We wanted to play outside, ___ it started to rain.",
+    "options": ["but", "so", "because", "or"],
+    "correctAnswerIndex": 0,
+    "explanation": "We use 'but' to connect two ideas that show a contrast.",
+    "category": "Conjunctions"
+  },
+  {
+    "id": "q11",
+    "questionText": "What is the prefix in the word 'unhappy'?",
+    "options": ["un", "happy", "py", "ha"],
+    "correctAnswerIndex": 0,
+    "explanation": "A prefix is added to the beginning of a word. 'Un-' means not!",
+    "category": "Prefixes"
+  },
+  {
+    "id": "q12",
+    "questionText": "What is the suffix in the word 'playful'?",
+    "options": ["play", "ful", "ay", "ul"],
+    "correctAnswerIndex": 1,
+    "explanation": "A suffix is added to the end of a word. '-ful' means full of!",
+    "category": "Suffixes"
+  },
+  {
+    "id": "q13",
+    "questionText": "Which word comes last in alphabetical order?",
+    "options": ["Cat", "Apple", "Banana", "Zebra"],
+    "correctAnswerIndex": 3,
+    "explanation": "'Zebra' starts with Z, which is the last letter of the alphabet!",
+    "category": "Alphabet"
+  },
+  {
+    "id": "q14",
+    "questionText": "What is the contraction for 'will not'?",
+    "options": ["willn't", "win't", "won't", "wont't"],
+    "correctAnswerIndex": 2,
+    "explanation": "'Will not' becomes the contraction 'won't'!",
+    "category": "Contractions"
+  },
+  {
+    "id": "q15",
+    "questionText": "Which of these is a compound word?",
+    "options": ["Running", "Raincoat", "Happy", "Doghouse"],
+    "correctAnswerIndex": 1,
+    "explanation": "'Rain' + 'Coat' makes the compound word 'Raincoat'!",
+    "category": "Word Building"
+  },
+  {
+    "id": "q16",
+    "questionText": "Tomorrow, we ___ to the zoo.",
+    "options": ["went", "will go", "go", "going"],
+    "correctAnswerIndex": 1,
+    "explanation": "'Tomorrow' refers to the future, so we use 'will go'.",
+    "category": "Verb Tenses"
+  },
+  {
+    "id": "q17",
+    "questionText": "A group of lions is called a ___.",
+    "options": ["pack", "herd", "pride", "school"],
+    "correctAnswerIndex": 2,
+    "explanation": "A collective noun for a group of lions is a 'pride'!",
+    "category": "Vocabulary"
+  },
+  {
+    "id": "q18",
+    "questionText": "Identify the adverb: 'She sang beautifully.'",
+    "options": ["She", "sang", "beautifully", "song"],
+    "correctAnswerIndex": 2,
+    "explanation": "'Beautifully' describes how she sang, so it is an adverb!",
+    "category": "Adverbs"
+  },
+  {
+    "id": "q19",
+    "questionText": "What is the female word for 'actor'?",
+    "options": ["actress", "actor", "action", "actressy"],
+    "correctAnswerIndex": 0,
+    "explanation": "A female actor is called an actress.",
+    "category": "Gender Nouns"
+  },
+  {
+    "id": "q20",
+    "questionText": "Which letter is silent in the word 'knee'?",
+    "options": ["k", "n", "e", "none"],
+    "correctAnswerIndex": 0,
+    "explanation": "The 'k' in 'knee' is silent; we only pronounce the 'nee' sound!",
+    "category": "Silent Letters"
+  },
+  {
+    "id": "q21",
+    "questionText": "He wants to buy ___ orange umbrella.",
+    "options": ["a", "an", "the", "some"],
+    "correctAnswerIndex": 1,
+    "explanation": "We use 'an' before words beginning with vowel sounds like 'orange'.",
+    "category": "Grammar"
+  },
+  {
+    "id": "q22",
+    "questionText": "Which word is spelled correctly?",
+    "options": ["Tomorow", "Tomorrow", "Toomorrow", "Tommorow"],
+    "correctAnswerIndex": 1,
+    "explanation": "Tomorrow is spelled T-O-M-O-R-R-O-W!",
+    "category": "Spelling"
+  },
+  {
+    "id": "q23",
+    "questionText": "What is the opposite of 'difficult'?",
+    "options": ["hard", "easy", "rough", "simple"],
+    "correctAnswerIndex": 1,
+    "explanation": "The opposite of difficult is easy!",
+    "category": "Antonyms"
+  },
+  {
+    "id": "q24",
+    "questionText": "Which word rhymes with 'bright'?",
+    "options": ["bite", "night", "rate", "boat"],
+    "correctAnswerIndex": 1,
+    "explanation": "Bright and night end with the same 'ight' sound!",
+    "category": "Rhyming"
+  },
+  {
+    "id": "q25",
+    "questionText": "This suitcase is ___ than that one.",
+    "options": ["heavy", "heavier", "heaviest", "more heavy"],
+    "correctAnswerIndex": 1,
+    "explanation": "We use the comparative form 'heavier' to compare two suitcases.",
+    "category": "Comparisons"
+  },
+  {
+    "id": "q26",
+    "questionText": "Choose the correct word: 'The wind ___ the leaves off the tree.'",
+    "options": ["blue", "blew", "blow", "blown"],
+    "correctAnswerIndex": 1,
+    "explanation": "'Blew' is the past tense of blow, while 'blue' is a color.",
+    "category": "Homophones"
+  },
+  {
+    "id": "q27",
+    "questionText": "I stayed inside ___ it was raining.",
+    "options": ["because", "but", "so", "or"],
+    "correctAnswerIndex": 0,
+    "explanation": "'Because' introduces the reason why I stayed inside.",
+    "category": "Conjunctions"
+  },
+  {
+    "id": "q28",
+    "questionText": "Ben and I are friends. ___ play soccer together.",
+    "options": ["We", "They", "He", "Us"],
+    "correctAnswerIndex": 0,
+    "explanation": "'We' is the subject pronoun for Ben and I.",
+    "category": "Pronouns"
+  },
+  {
+    "id": "q29",
+    "questionText": "What is a baby dog called?",
+    "options": ["kitten", "cub", "puppy", "calf"],
+    "correctAnswerIndex": 2,
+    "explanation": "A baby dog is a puppy!",
+    "category": "Vocabulary"
+  },
+  {
+    "id": "q30",
+    "questionText": "The clock hangs ___ the fireplace.",
+    "options": ["under", "above", "through", "in"],
+    "correctAnswerIndex": 1,
+    "explanation": "'Above' means higher than the fireplace.",
+    "category": "Prepositions"
+  }
+]

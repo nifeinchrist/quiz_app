@@ -1,8 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'quiz_screen.dart';
+import 'login_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
-  const WelcomeScreen({super.key});
+  final String username;
+  final int age;
+
+  const WelcomeScreen({super.key, required this.username, required this.age});
+
+  Future<void> _logout(BuildContext context) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    await prefs.remove('username');
+    await prefs.remove('age');
+
+    if (!context.mounted) return;
+
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (_) => const LoginScreen()),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -10,23 +29,40 @@ class WelcomeScreen extends StatelessWidget {
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [
-              Color(0xFF673AB7), // Deep Purple
-              Color(0xFF9C27B0), // Purple
-              Color(0xFFE91E63), // Pink
-            ],
+            colors: [Color(0xFF673AB7), Color(0xFF9C27B0), Color(0xFFE91E63)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
         ),
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 24.0,
+              vertical: 16.0,
+            ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                // Logout button
+                Align(
+                  alignment: Alignment.topRight,
+                  child: TextButton.icon(
+                    onPressed: () => _logout(context),
+                    icon: const Icon(
+                      Icons.logout_rounded,
+                      color: Colors.white70,
+                      size: 20,
+                    ),
+                    label: const Text(
+                      'Logout',
+                      style: TextStyle(color: Colors.white70, fontSize: 14),
+                    ),
+                  ),
+                ),
+
                 const Spacer(),
-                // Star Icon / Hero Emblem
+
+                // Star Icon
                 Container(
                   padding: const EdgeInsets.all(24),
                   decoration: BoxDecoration(
@@ -46,49 +82,73 @@ class WelcomeScreen extends StatelessWidget {
                     color: Colors.amberAccent,
                   ),
                 ),
+
                 const SizedBox(height: 24),
-                // Title
-                const Text(
-                  'English Fun Quiz!',
+
+                // Personalised welcome
+                Text(
+                  'Welcome, $username! 👋',
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 32,
+                  style: const TextStyle(
+                    fontSize: 26,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                     letterSpacing: 0.5,
                   ),
                 ),
-                const SizedBox(height: 8),
-                Text(
-                  'Fun learning for 7-year-old Stars ⭐',
+
+                const SizedBox(height: 6),
+
+                // Quiz title
+                const Text(
+                  'English Fun Quiz!',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.amberAccent,
+                    letterSpacing: 0.5,
+                  ),
+                ),
+
+                const SizedBox(height: 6),
+
+                // User's actual age
+                Text(
+                  'Fun learning for $age-year-old Stars ⭐',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 15,
                     color: Colors.white.withValues(alpha: 0.9),
                     fontWeight: FontWeight.w500,
                   ),
                 ),
+
                 const SizedBox(height: 32),
 
-                // Info Cards Grid
+                // Info Cards
                 Row(
                   children: [
                     Expanded(
                       child: _buildInfoCard(
                         icon: Icons.question_answer_rounded,
-                        title: '20 Questions',
-                        subtitle: 'Quick & Fun',
+                        title: '10 Questions',
+                        subtitle: 'Per Round',
                       ),
                     ),
+
                     const SizedBox(width: 12),
+
                     Expanded(
                       child: _buildInfoCard(
                         icon: Icons.child_care_rounded,
-                        title: 'Age 7',
-                        subtitle: 'Grade 1 & 2',
+                        title: 'Age $age',
+                        subtitle: 'Your Level',
                       ),
                     ),
+
                     const SizedBox(width: 12),
+
                     Expanded(
                       child: _buildInfoCard(
                         icon: Icons.star_rounded,
@@ -101,12 +161,12 @@ class WelcomeScreen extends StatelessWidget {
 
                 const SizedBox(height: 24),
 
-                // Topics Pill Wrap
-                Wrap(
+                // Topics
+                const Wrap(
                   spacing: 8,
                   runSpacing: 8,
                   alignment: WrapAlignment.center,
-                  children: const [
+                  children: [
                     _TopicChip(label: '🔤 Spelling'),
                     _TopicChip(label: '📖 Grammar'),
                     _TopicChip(label: '🎵 Rhyming'),
@@ -117,7 +177,7 @@ class WelcomeScreen extends StatelessWidget {
 
                 const Spacer(),
 
-                // Start Button
+                // Start Quiz Button
                 SizedBox(
                   width: double.infinity,
                   height: 56,
@@ -126,7 +186,8 @@ class WelcomeScreen extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const QuizScreen(),
+                          builder: (context) =>
+                              QuizScreen(username: username, age: age),
                         ),
                       );
                     },
@@ -155,6 +216,7 @@ class WelcomeScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+
                 const SizedBox(height: 16),
               ],
             ),
@@ -179,7 +241,9 @@ class WelcomeScreen extends StatelessWidget {
       child: Column(
         children: [
           Icon(icon, color: Colors.amberAccent, size: 28),
+
           const SizedBox(height: 8),
+
           Text(
             title,
             style: const TextStyle(
@@ -189,13 +253,12 @@ class WelcomeScreen extends StatelessWidget {
             ),
             textAlign: TextAlign.center,
           ),
+
           const SizedBox(height: 2),
+
           Text(
             subtitle,
-            style: const TextStyle(
-              color: Colors.white70,
-              fontSize: 11,
-            ),
+            style: const TextStyle(color: Colors.white70, fontSize: 11),
             textAlign: TextAlign.center,
           ),
         ],
@@ -206,6 +269,7 @@ class WelcomeScreen extends StatelessWidget {
 
 class _TopicChip extends StatelessWidget {
   final String label;
+
   const _TopicChip({required this.label});
 
   @override
