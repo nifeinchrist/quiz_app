@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'welcome_screen.dart';
+import 'key_stage_1_screen.dart';
+import 'key_stage_2_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -13,30 +14,33 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
 
   final _nameController = TextEditingController();
-  final _ageController = TextEditingController();
+  String? _selectedKeyStage;
 
   bool _isLoading = false;
 
   @override
   void dispose() {
     _nameController.dispose();
-    _ageController.dispose();
     super.dispose();
   }
 
   Future<void> _login() async {
     if (!_formKey.currentState!.validate()) return;
 
+    if (_selectedKeyStage == null) {
+      setState(() {});
+      return;
+    }
+
     setState(() => _isLoading = true);
 
     final prefs = await SharedPreferences.getInstance();
 
     final name = _nameController.text.trim();
-    final age = int.parse(_ageController.text.trim());
 
-    // Save username and age
+    // Save username and selected key stage.
     await prefs.setString('username', name);
-    await prefs.setInt('age', age);
+    await prefs.setString('key_stage', _selectedKeyStage!);
 
     if (!mounted) return;
 
@@ -45,7 +49,9 @@ class _LoginScreenState extends State<LoginScreen> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => WelcomeScreen(username: name, age: age),
+        builder: (context) => _selectedKeyStage == 'KS1'
+            ? KeyStage1Screen(username: name)
+            : KeyStage2Screen(username: name),
       ),
     );
   }
@@ -109,7 +115,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(height: 8),
 
                   Text(
-                    'Enter your name and age to get started ⭐',
+                    'Enter your name and choose your key stage to get started ⭐',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 15,
@@ -190,9 +196,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
                           const SizedBox(height: 24),
 
-                          // Age
                           const Text(
-                            'How old are you?',
+                            'Choose your key stage',
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
@@ -202,48 +207,35 @@ class _LoginScreenState extends State<LoginScreen> {
 
                           const SizedBox(height: 16),
 
-                          TextFormField(
-                            controller: _ageController,
-                            keyboardType: TextInputType.number,
-                            style: const TextStyle(color: Colors.black),
-                            decoration: InputDecoration(
-                              hintText: 'e.g. 8',
-                              prefixIcon: const Icon(
-                                Icons.cake_rounded,
-                                color: Colors.deepPurple,
-                              ),
-                              filled: true,
-                              fillColor: Colors.deepPurple.shade50,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(14),
-                                borderSide: BorderSide.none,
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(14),
-                                borderSide: const BorderSide(
-                                  color: Colors.deepPurple,
-                                  width: 2,
+                          Row(
+                            children: [
+                              Expanded(
+                                child: _buildKeyStageButton(
+                                  keyStage: 'KS1',
+                                  label: 'Key Stage 1',
+                                  grades: 'Grades 1 and 2',
+                                  icon: Icons.looks_one_rounded,
                                 ),
                               ),
-                            ),
-                            validator: (value) {
-                              if (value == null || value.trim().isEmpty) {
-                                return 'Please enter your age!';
-                              }
-
-                              final age = int.tryParse(value.trim());
-
-                              if (age == null) {
-                                return 'Please enter a valid age.';
-                              }
-
-                              if (age < 5 || age > 18) {
-                                return 'Please enter an age between 5 and 18.';
-                              }
-
-                              return null;
-                            },
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: _buildKeyStageButton(
+                                  keyStage: 'KS2',
+                                  label: 'Key Stage 2',
+                                  grades: 'Grades 3 to 6',
+                                  icon: Icons.looks_two_rounded,
+                                ),
+                              ),
+                            ],
                           ),
+
+                          if (_selectedKeyStage == null) ...[
+                            const SizedBox(height: 8),
+                            const Text(
+                              'Please choose a key stage.',
+                              style: TextStyle(color: Colors.red, fontSize: 12),
+                            ),
+                          ],
 
                           const SizedBox(height: 28),
 
@@ -298,6 +290,56 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildKeyStageButton({
+    required String keyStage,
+    required String label,
+    required String grades,
+    required IconData icon,
+  }) {
+    final isSelected = _selectedKeyStage == keyStage;
+
+    return SizedBox(
+      height: 104,
+      child: ElevatedButton(
+        onPressed: _isLoading
+            ? null
+            : () => setState(() => _selectedKeyStage = keyStage),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: isSelected
+              ? Colors.deepPurple
+              : Colors.deepPurple.shade50,
+          foregroundColor: isSelected ? Colors.white : Colors.deepPurple,
+          elevation: isSelected ? 4 : 0,
+          side: BorderSide(
+            color: isSelected ? Colors.deepPurple : Colors.deepPurple.shade100,
+            width: 2,
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(14),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon, size: 28),
+            const SizedBox(height: 4),
+            Text(
+              label,
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Text(
+              grades,
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: 12),
+            ),
+          ],
         ),
       ),
     );

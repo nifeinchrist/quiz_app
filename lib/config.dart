@@ -1,19 +1,6 @@
 class AppConfig {
-  // Age ranges for key stages
-  static const int minAgeKS1 = 5;
-  static const int maxAgeKS1 = 7;
-  static const int minAgeKS2 = 8;
-  static const int maxAgeKS2 = 11;
-
-  // SharedPreferences key for storing selected age
-  static const String selectedAgeKey = 'selected_age';
-
-  /// Returns the key stage string based on the provided age.
-  static String getKeyStage(int age) {
-    if (age >= minAgeKS1 && age <= maxAgeKS1) return 'KS1';
-    if (age >= minAgeKS2 && age <= maxAgeKS2) return 'KS2';
-    return '';
-  }
+  // SharedPreferences key for storing the selected key stage.
+  static const String selectedKeyStageKey = 'key_stage';
 
   // Duration of each question timer in seconds
   static const int timerDurationSeconds = 30;

@@ -4,13 +4,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../api_service.dart';
 import '../models/question.dart';
 import '../config.dart';
+import '../progress_service.dart';
 import 'result_screen.dart';
 
 class QuizScreen extends StatefulWidget {
   final String username;
-  final int age;
+  final String keyStage;
 
-  const QuizScreen({super.key, required this.username, required this.age});
+  const QuizScreen({super.key, required this.username, required this.keyStage});
 
   @override
   State<QuizScreen> createState() => _QuizScreenState();
@@ -55,7 +56,7 @@ class _QuizScreenState extends State<QuizScreen> {
     try {
       final prefs = await SharedPreferences.getInstance();
 
-      final String historyKey = 'seen_${widget.username}';
+      final String historyKey = 'seen_${widget.username}_${widget.keyStage}';
 
       // Load questions
       final List<Question> allQuestions = await ApiService().fetchQuestions();
@@ -111,6 +112,19 @@ class _QuizScreenState extends State<QuizScreen> {
 
     await prefs.setStringList(historyKey, updatedSeen.toList());
 
+    await ProgressService.save(
+      ProgressRecord(
+        username: widget.username,
+        section: widget.keyStage,
+        activity: 'English Quiz',
+        multipleChoiceScore: _score,
+        multipleChoiceTotal: _sessionQuestions.length,
+        writtenScore: 0,
+        writtenTotal: 0,
+        completedAt: DateTime.now(),
+      ),
+    );
+
     if (!mounted) return;
 
     Navigator.pushReplacement(
@@ -123,9 +137,7 @@ class _QuizScreenState extends State<QuizScreen> {
           userAnswers: _userAnswers,
           username: widget.username,
 
-          // IMPORTANT:
-          // Pass the user's actual age.
-          age: widget.age,
+          keyStage: widget.keyStage,
         ),
       ),
     );

@@ -9,7 +9,7 @@ class ResultScreen extends StatefulWidget {
   final List<Question> questions;
   final List<int?> userAnswers;
   final String username;
-  final int age;
+  final String keyStage;
 
   const ResultScreen({
     super.key,
@@ -18,7 +18,7 @@ class ResultScreen extends StatefulWidget {
     required this.questions,
     required this.userAnswers,
     required this.username,
-    required this.age,
+    required this.keyStage,
   });
 
   @override
@@ -241,7 +241,7 @@ class _ResultScreenState extends State<ResultScreen> {
                             MaterialPageRoute(
                               builder: (context) => QuizScreen(
                                 username: widget.username,
-                                age: widget.age,
+                                keyStage: widget.keyStage,
                               ),
                             ),
                           );
@@ -275,7 +275,7 @@ class _ResultScreenState extends State<ResultScreen> {
                     MaterialPageRoute(
                       builder: (context) => WelcomeScreen(
                         username: widget.username,
-                        age: widget.age,
+                        keyStage: widget.keyStage,
                       ),
                     ),
                     (route) => false,
@@ -361,9 +361,7 @@ class _ResultScreenState extends State<ResultScreen> {
                         Text(
                           'Your Answer: ${userAns != null ? q.options[userAns] : 'Not answered'}',
                           style: TextStyle(
-                            color: isCorrect
-                                ? Colors.green.shade800
-                                : Colors.red.shade800,
+                            color: Colors.black87,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -372,7 +370,7 @@ class _ResultScreenState extends State<ResultScreen> {
                           Text(
                             'Correct Answer: ${q.options[q.correctAnswerIndex]}',
                             style: TextStyle(
-                              color: Colors.green.shade800,
+                              color: Colors.black87,
                               fontWeight: FontWeight.w600,
                             ),
                           ),

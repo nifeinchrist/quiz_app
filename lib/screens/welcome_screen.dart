@@ -5,15 +5,19 @@ import 'login_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
   final String username;
-  final int age;
+  final String keyStage;
 
-  const WelcomeScreen({super.key, required this.username, required this.age});
+  const WelcomeScreen({
+    super.key,
+    required this.username,
+    required this.keyStage,
+  });
 
   Future<void> _logout(BuildContext context) async {
     final prefs = await SharedPreferences.getInstance();
 
     await prefs.remove('username');
-    await prefs.remove('age');
+    await prefs.remove('key_stage');
 
     if (!context.mounted) return;
 
@@ -113,9 +117,8 @@ class WelcomeScreen extends StatelessWidget {
 
                 const SizedBox(height: 6),
 
-                // User's actual age
                 Text(
-                  'Fun learning for $age-year-old Stars ⭐',
+                  '$keyStage learning for bright Stars ⭐',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 15,
@@ -142,7 +145,7 @@ class WelcomeScreen extends StatelessWidget {
                     Expanded(
                       child: _buildInfoCard(
                         icon: Icons.child_care_rounded,
-                        title: 'Age $age',
+                        title: keyStage,
                         subtitle: 'Your Level',
                       ),
                     ),
@@ -186,8 +189,10 @@ class WelcomeScreen extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) =>
-                              QuizScreen(username: username, age: age),
+                          builder: (context) => QuizScreen(
+                            username: username,
+                            keyStage: keyStage,
+                          ),
                         ),
                       );
                     },
