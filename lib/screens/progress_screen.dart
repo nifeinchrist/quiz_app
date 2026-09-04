@@ -20,11 +20,22 @@ class _ProgressScreenState extends State<ProgressScreen> {
   late Future<List<ProgressRecord>> _history;
 
   bool get _isKeyStage2 => widget.keyStage == 'KS2';
-  Color get _accentColor =>
-      _isKeyStage2 ? const Color(0xFF174A5B) : const Color(0xFFE76F51);
-  Color get _pageColor =>
-      _isKeyStage2 ? const Color(0xFFEAF4F6) : const Color(0xFFFFF4EF);
-  String get _stageName => _isKeyStage2 ? 'Key Stage 2' : 'Key Stage 1';
+  bool get _isAdvanced => widget.keyStage == 'ADVANCED';
+  Color get _accentColor => _isAdvanced
+      ? const Color(0xFF5B4B8A)
+      : _isKeyStage2
+      ? const Color(0xFF174A5B)
+      : const Color(0xFFE76F51);
+  Color get _pageColor => _isAdvanced
+      ? const Color(0xFFF3F0FF)
+      : _isKeyStage2
+      ? const Color(0xFFEAF4F6)
+      : const Color(0xFFFFF4EF);
+  String get _stageName => _isAdvanced
+      ? 'Advanced'
+      : _isKeyStage2
+      ? 'Intermediate'
+      : 'Beginner';
 
   @override
   void initState() {
@@ -77,6 +88,8 @@ class _ProgressScreenState extends State<ProgressScreen> {
                 const SizedBox(height: 20),
                 _buildAwards(records),
                 const SizedBox(height: 20),
+                _buildProgressChart(records),
+                const SizedBox(height: 20),
                 Text(
                   'Recent activity',
                   style: TextStyle(
@@ -99,6 +112,9 @@ class _ProgressScreenState extends State<ProgressScreen> {
   }
 
   bool _belongsToThisStage(ProgressRecord record) {
+    if (_isAdvanced) {
+      return record.section == 'ADVANCED';
+    }
     if (_isKeyStage2) {
       return record.section == 'KS2' || record.section.startsWith('KS2 ');
     }
@@ -175,7 +191,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
           ),
           (
             title: 'All-round learner',
-            detail: 'Try all three KS1 sections',
+            detail: 'Try all three sections',
             icon: Icons.workspace_premium_rounded,
             earned: records.map((record) => record.section).toSet().length >= 3,
           ),
@@ -193,7 +209,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
         ),
         const SizedBox(height: 10),
         SizedBox(
-          height: 132,
+          height: 172,
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
             itemCount: awards.length,
@@ -223,15 +239,32 @@ class _ProgressScreenState extends State<ProgressScreen> {
                     Text(
                       award.title,
                       textAlign: TextAlign.center,
-                      style: const TextStyle(fontWeight: FontWeight.bold),
+                      style: const TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black87,
+                      ),
                     ),
                     const SizedBox(height: 3),
                     Text(
-                      award.earned ? 'Earned' : 'Keep learning',
+                      award.detail,
                       textAlign: TextAlign.center,
                       style: const TextStyle(
-                        fontSize: 12,
-                        color: Colors.black54,
+                        fontSize: 13,
+                        height: 1.2,
+                        color: Colors.black87,
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    Text(
+                      award.earned ? 'Earned' : 'Not earned yet',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w700,
+                        color: award.earned
+                            ? Colors.green.shade800
+                            : Colors.black54,
                       ),
                     ),
                   ],
@@ -244,25 +277,153 @@ class _ProgressScreenState extends State<ProgressScreen> {
     );
   }
 
+  Widget _buildProgressChart(List<ProgressRecord> records) {
+    final chartRecords = records.take(8).toList();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Progress chart',
+          style: TextStyle(
+            color: _accentColor,
+            fontSize: 21,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 10),
+        Card(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: chartRecords.isEmpty
+                ? const Text(
+                    'Complete an activity to see your scores here.',
+                    style: TextStyle(fontSize: 15),
+                  )
+                : Column(
+                    children: chartRecords.map((record) {
+                      final progress = record.percentage / 100;
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 14),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    record.activity,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 12),
+                                Text(
+                                  '${record.percentage}%',
+                                  style: TextStyle(
+                                    color: _accentColor,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 6),
+                            LinearProgressIndicator(
+                              value: progress.clamp(0.0, 1.0),
+                              minHeight: 10,
+                              borderRadius: BorderRadius.circular(8),
+                              backgroundColor: _accentColor.withValues(
+                                alpha: 0.15,
+                              ),
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                _accentColor,
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    }).toList(),
+                  ),
+          ),
+        ),
+      ],
+    );
+  }
+
   Widget _buildRecord(ProgressRecord record) {
     return Card(
       margin: const EdgeInsets.only(bottom: 10),
-      child: ListTile(
-        leading: CircleAvatar(
-          backgroundColor: _accentColor,
-          foregroundColor: Colors.white,
-          child: Text('${record.percentage}%'),
-        ),
-        title: Text(
-          record.activity,
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ),
-        subtitle: Text(
-          '${record.section}  |  MCQ ${record.multipleChoiceScore}/${record.multipleChoiceTotal}  |  Theory ${record.writtenScore}/${record.writtenTotal}',
-        ),
-        trailing: Text(
-          _date(record.completedAt),
-          style: const TextStyle(fontSize: 12, color: Colors.black54),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Text(
+                    record.activity,
+                    style: const TextStyle(
+                      fontSize: 17,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 6,
+                  ),
+                  decoration: BoxDecoration(
+                    color: _accentColor,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Text(
+                    '${record.percentage}%',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Text(
+              record.section,
+              style: TextStyle(
+                color: _accentColor,
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const SizedBox(height: 12),
+            Wrap(
+              spacing: 16,
+              runSpacing: 6,
+              children: [
+                Text(
+                  'MCQ: ${record.multipleChoiceScore}/${record.multipleChoiceTotal}',
+                  style: const TextStyle(fontSize: 14),
+                ),
+                Text(
+                  'Theory: ${record.writtenScore}/${record.writtenTotal}',
+                  style: const TextStyle(fontSize: 14),
+                ),
+                Text(
+                  _date(record.completedAt),
+                  style: const TextStyle(fontSize: 14, color: Colors.black54),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );

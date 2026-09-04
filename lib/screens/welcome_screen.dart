@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import '../auth_service.dart';
 import 'quiz_screen.dart';
-import 'login_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
   final String username;
@@ -12,20 +11,6 @@ class WelcomeScreen extends StatelessWidget {
     required this.username,
     required this.keyStage,
   });
-
-  Future<void> _logout(BuildContext context) async {
-    final prefs = await SharedPreferences.getInstance();
-
-    await prefs.remove('username');
-    await prefs.remove('key_stage');
-
-    if (!context.mounted) return;
-
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (_) => const LoginScreen()),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +36,7 @@ class WelcomeScreen extends StatelessWidget {
                 Align(
                   alignment: Alignment.topRight,
                   child: TextButton.icon(
-                    onPressed: () => _logout(context),
+                    onPressed: () => logout(context),
                     icon: const Icon(
                       Icons.logout_rounded,
                       color: Colors.white70,

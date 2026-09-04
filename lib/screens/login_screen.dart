@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'key_stage_1_screen.dart';
-import 'key_stage_2_screen.dart';
+import '../app_theme.dart';
+import 'beginner_screen.dart';
+import 'intermediate_screen.dart';
+import 'advanced_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -51,7 +53,9 @@ class _LoginScreenState extends State<LoginScreen> {
       MaterialPageRoute(
         builder: (context) => _selectedKeyStage == 'KS1'
             ? KeyStage1Screen(username: name)
-            : KeyStage2Screen(username: name),
+            : _selectedKeyStage == 'KS2'
+            ? KeyStage2Screen(username: name)
+            : AdvancedScreen(username: name),
       ),
     );
   }
@@ -62,7 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Color(0xFF673AB7), Color(0xFF9C27B0), Color(0xFFE91E63)],
+            colors: [AppTheme.veryLightOrange, AppTheme.lightOrange],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -81,20 +85,20 @@ class _LoginScreenState extends State<LoginScreen> {
                   Container(
                     padding: const EdgeInsets.all(22),
                     decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.2),
+                      color: Colors.white,
                       shape: BoxShape.circle,
-                      boxShadow: const [
+                      boxShadow: [
                         BoxShadow(
-                          color: Colors.black26,
+                          color: AppTheme.darkOrange.withValues(alpha: 0.2),
                           blurRadius: 16,
-                          offset: Offset(0, 8),
+                          offset: const Offset(0, 8),
                         ),
                       ],
                     ),
                     child: const Icon(
                       Icons.auto_awesome,
                       size: 70,
-                      color: Colors.amberAccent,
+                      color: AppTheme.lemonGreen,
                     ),
                   ),
 
@@ -107,19 +111,19 @@ class _LoginScreenState extends State<LoginScreen> {
                     style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: AppTheme.darkOrange,
                       letterSpacing: 0.5,
                     ),
                   ),
 
                   const SizedBox(height: 8),
 
-                  Text(
-                    'Enter your name and choose your key stage to get started ⭐',
+                  const Text(
+                    'Enter your name and choose a level to get started',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 15,
-                      color: Colors.white.withValues(alpha: 0.9),
+                      color: AppTheme.darkOrange,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -165,10 +169,10 @@ class _LoginScreenState extends State<LoginScreen> {
                               hintText: 'e.g. Alex',
                               prefixIcon: const Icon(
                                 Icons.person_rounded,
-                                color: Colors.deepPurple,
+                                color: AppTheme.darkOrange,
                               ),
                               filled: true,
-                              fillColor: Colors.deepPurple.shade50,
+                              fillColor: AppTheme.veryLightOrange,
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(14),
                                 borderSide: BorderSide.none,
@@ -176,7 +180,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(14),
                                 borderSide: const BorderSide(
-                                  color: Colors.deepPurple,
+                                  color: AppTheme.darkOrange,
                                   width: 2,
                                 ),
                               ),
@@ -197,7 +201,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           const SizedBox(height: 24),
 
                           const Text(
-                            'Choose your key stage',
+                            'Choose your level',
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
@@ -212,7 +216,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               Expanded(
                                 child: _buildKeyStageButton(
                                   keyStage: 'KS1',
-                                  label: 'Key Stage 1',
+                                  label: 'Beginner',
                                   grades: 'Grades 1 and 2',
                                   icon: Icons.looks_one_rounded,
                                 ),
@@ -221,18 +225,25 @@ class _LoginScreenState extends State<LoginScreen> {
                               Expanded(
                                 child: _buildKeyStageButton(
                                   keyStage: 'KS2',
-                                  label: 'Key Stage 2',
-                                  grades: 'Grades 3 to 6',
+                                  label: 'Intermediate',
+                                  grades: 'Grades 3 and 4',
                                   icon: Icons.looks_two_rounded,
                                 ),
                               ),
                             ],
                           ),
+                          const SizedBox(height: 12),
+                          _buildKeyStageButton(
+                            keyStage: 'ADVANCED',
+                            label: 'Advanced',
+                            grades: 'Grades 5 and 6',
+                            icon: Icons.looks_3_rounded,
+                          ),
 
                           if (_selectedKeyStage == null) ...[
                             const SizedBox(height: 8),
                             const Text(
-                              'Please choose a key stage.',
+                              'Please choose a level.',
                               style: TextStyle(color: Colors.red, fontSize: 12),
                             ),
                           ],
@@ -245,7 +256,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: ElevatedButton(
                               onPressed: _isLoading ? null : _login,
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.deepPurple,
+                                backgroundColor: AppTheme.primaryOrange,
                                 foregroundColor: Colors.white,
                                 elevation: 4,
                                 shape: RoundedRectangleBorder(
@@ -311,12 +322,12 @@ class _LoginScreenState extends State<LoginScreen> {
             : () => setState(() => _selectedKeyStage = keyStage),
         style: ElevatedButton.styleFrom(
           backgroundColor: isSelected
-              ? Colors.deepPurple
-              : Colors.deepPurple.shade50,
-          foregroundColor: isSelected ? Colors.white : Colors.deepPurple,
+              ? AppTheme.primaryOrange
+              : AppTheme.veryLightOrange,
+          foregroundColor: isSelected ? Colors.white : AppTheme.darkOrange,
           elevation: isSelected ? 4 : 0,
           side: BorderSide(
-            color: isSelected ? Colors.deepPurple : Colors.deepPurple.shade100,
+            color: isSelected ? AppTheme.darkOrange : AppTheme.lightOrange,
             width: 2,
           ),
           shape: RoundedRectangleBorder(

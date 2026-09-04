@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'app_theme.dart';
 import 'screens/login_screen.dart';
-import 'screens/key_stage_1_screen.dart';
-import 'screens/key_stage_2_screen.dart';
+import 'screens/beginner_screen.dart';
+import 'screens/intermediate_screen.dart';
+import 'screens/advanced_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,16 +34,16 @@ class EnglishQuizApp extends StatelessWidget {
       title: 'English Quiz App',
       debugShowCheckedModeBanner: false,
 
-      themeMode: ThemeMode.system,
+      themeMode: ThemeMode.light,
 
-      theme: ThemeData.light(),
-
-      darkTheme: ThemeData.dark(),
+      theme: AppTheme.lightTheme,
 
       home: initialUsername != null && initialKeyStage != null
           ? initialKeyStage == 'KS1'
                 ? KeyStage1Screen(username: initialUsername!)
-                : KeyStage2Screen(username: initialUsername!)
+                : initialKeyStage == 'KS2'
+                ? KeyStage2Screen(username: initialUsername!)
+                : AdvancedScreen(username: initialUsername!)
           : const LoginScreen(),
     );
   }

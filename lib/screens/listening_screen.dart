@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-import '../data/ks1_listening_data.dart';
+import '../data/beginner_listening_data.dart';
 import '../progress_service.dart';
 
 const _listeningColor = Color(0xFF2A9D8F);
@@ -18,7 +18,7 @@ class ListeningScreen extends StatelessWidget {
     super.key,
     required this.username,
     this.keyStage = 'KS1',
-    this.title = 'Key Stage 1 Listening Skills',
+    this.title = 'Beginner Listening Skills',
     this.description =
         'Grades 1 and 2: listen carefully, then answer in writing.',
     this.accentColor = _listeningColor,
@@ -113,7 +113,7 @@ class ListeningExerciseScreen extends StatefulWidget {
     required this.exerciseNumber,
     required this.username,
     this.keyStage = 'KS1',
-    this.title = 'Key Stage 1 Listening Skills',
+    this.title = 'Beginner Listening Skills',
     this.accentColor = _listeningColor,
     this.backgroundColor = const Color(0xFFEFFAF7),
   });

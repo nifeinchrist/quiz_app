@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/question.dart';
 import 'quiz_screen.dart';
 import 'welcome_screen.dart';
+import '../app_theme.dart';
 
 class ResultScreen extends StatefulWidget {
   final int score;
@@ -52,7 +53,7 @@ class _ResultScreenState extends State<ResultScreen> {
     final percentage = ((widget.score / widget.totalQuestions) * 100).round();
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF4F5FB),
+      backgroundColor: AppTheme.veryLightOrange,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24.0),
@@ -67,7 +68,7 @@ class _ResultScreenState extends State<ResultScreen> {
                 style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
-                  color: Colors.deepPurple,
+                  color: AppTheme.darkOrange,
                 ),
               ),
 
@@ -83,7 +84,7 @@ class _ResultScreenState extends State<ResultScreen> {
                       Icons.star_rounded,
                       size: 52,
                       color: index < stars
-                          ? Colors.amber
+                          ? AppTheme.lemonGreen
                           : Colors.grey.shade300,
                     ),
                   );
@@ -99,16 +100,16 @@ class _ResultScreenState extends State<ResultScreen> {
                   vertical: 12,
                 ),
                 decoration: BoxDecoration(
-                  color: Colors.deepPurple.shade50,
+                  color: AppTheme.lightLemonGreen,
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
                   feedbackMessage,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color: Colors.deepPurple.shade800,
+                    color: AppTheme.darkOrange,
                   ),
                 ),
               ),
@@ -141,9 +142,9 @@ class _ResultScreenState extends State<ResultScreen> {
                           child: CircularProgressIndicator(
                             value: widget.score / widget.totalQuestions,
                             strokeWidth: 12,
-                            backgroundColor: Colors.grey.shade200,
+                            backgroundColor: AppTheme.lightOrange,
                             valueColor: const AlwaysStoppedAnimation<Color>(
-                              Colors.deepPurple,
+                              AppTheme.primaryOrange,
                             ),
                           ),
                         ),
@@ -155,7 +156,7 @@ class _ResultScreenState extends State<ResultScreen> {
                               style: const TextStyle(
                                 fontSize: 32,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.deepPurple,
+                                color: AppTheme.darkOrange,
                               ),
                             ),
                             Text(
@@ -215,9 +216,9 @@ class _ResultScreenState extends State<ResultScreen> {
                           _showReview ? 'HIDE REVIEW' : 'REVIEW ANSWERS',
                         ),
                         style: OutlinedButton.styleFrom(
-                          foregroundColor: Colors.deepPurple,
+                          foregroundColor: AppTheme.darkOrange,
                           side: const BorderSide(
-                            color: Colors.deepPurple,
+                            color: AppTheme.darkOrange,
                             width: 2,
                           ),
                           shape: RoundedRectangleBorder(
@@ -249,8 +250,8 @@ class _ResultScreenState extends State<ResultScreen> {
                         icon: const Icon(Icons.replay_rounded),
                         label: const Text('PLAY AGAIN'),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.amberAccent,
-                          foregroundColor: Colors.deepPurple.shade900,
+                          backgroundColor: AppTheme.primaryOrange,
+                          foregroundColor: Colors.white,
                           elevation: 4,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(26),
@@ -281,11 +282,11 @@ class _ResultScreenState extends State<ResultScreen> {
                     (route) => false,
                   );
                 },
-                icon: const Icon(Icons.home_rounded, color: Colors.deepPurple),
+                icon: const Icon(Icons.home_rounded, color: AppTheme.darkOrange),
                 label: const Text(
                   'Back to Main Menu',
                   style: TextStyle(
-                    color: Colors.deepPurple,
+                    color: AppTheme.darkOrange,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -302,7 +303,7 @@ class _ResultScreenState extends State<ResultScreen> {
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
-                      color: Colors.deepPurple,
+                      color: AppTheme.darkOrange,
                     ),
                   ),
                 ),

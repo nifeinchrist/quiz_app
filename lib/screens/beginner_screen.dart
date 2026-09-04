@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../app_theme.dart';
 import '../auth_service.dart';
 import 'comprehension_screen.dart';
 import 'grammar_screen.dart';
@@ -16,23 +17,23 @@ class KeyStage1Screen extends StatelessWidget {
       title: 'Beginner',
       subtitle: 'Choose a learning skill, $username!',
       grades: 'Grades 1 and 2',
-      color: const Color(0xFF176B87),
+      color: AppTheme.darkOrange,
       subjects: const [
         _SubjectOption(
           'Comprehension',
           Icons.menu_book_rounded,
-          Color(0xFF176B87),
+          AppTheme.primaryOrange,
         ),
-        _SubjectOption('Grammar', Icons.spellcheck_rounded, Color(0xFF176B87)),
+        _SubjectOption('Grammar', Icons.spellcheck_rounded, AppTheme.primaryOrange),
         _SubjectOption(
           'Listening Skills',
           Icons.headphones_rounded,
-          Color(0xFF176B87),
+          AppTheme.primaryOrange,
         ),
         _SubjectOption(
           'My Progress',
           Icons.insights_rounded,
-          Color(0xFF176B87),
+          AppTheme.lemonGreen,
         ),
       ],
       onSubjectSelected: (subject) {
@@ -114,7 +115,7 @@ class _SubjectSelectionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF4F7F8),
+      backgroundColor: AppTheme.veryLightOrange,
       appBar: AppBar(
         backgroundColor: color,
         foregroundColor: Colors.white,

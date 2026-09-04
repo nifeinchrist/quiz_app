@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../data/ks1_comprehension_data.dart';
+import '../data/beginner_comprehension_data.dart';
 import '../progress_service.dart';
 
 const _comprehensionColor = Color(0xFFE76F51);
@@ -86,7 +86,10 @@ class ComprehensionScreen extends StatelessWidget {
                   passage.title,
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
-                subtitle: const Text('5 multiple-choice + 5 written questions'),
+                subtitle: Text(
+                  '${passage.multipleChoiceQuestions.length} multiple-choice + '
+                  '${passage.writtenQuestions.length} theory questions',
+                ),
                 trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 18),
                 onTap: () => Navigator.push(
                   context,

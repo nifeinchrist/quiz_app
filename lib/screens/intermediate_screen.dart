@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../app_theme.dart';
 import '../auth_service.dart';
 import '../data/intermediate_comprehension_data.dart';
 import '../data/intermediate_grammar_data.dart';
@@ -16,9 +17,9 @@ class KeyStage2Screen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFFF8F0),
+      backgroundColor: AppTheme.veryLightOrange,
       appBar: AppBar(
-        backgroundColor: const Color(0xFFE26D5C),
+        backgroundColor: AppTheme.darkOrange,
         foregroundColor: Colors.white,
         leading: IconButton(
           onPressed: () => logout(context),
@@ -37,14 +38,14 @@ class KeyStage2Screen extends StatelessWidget {
               const Icon(
                 Icons.auto_awesome_rounded,
                 size: 64,
-                color: Color(0xFFE26D5C),
+                color: AppTheme.darkOrange,
               ),
               const SizedBox(height: 18),
               const Text(
                 'Intermediate',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: Color(0xFFE26D5C),
+                  color: AppTheme.darkOrange,
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
                 ),
@@ -60,7 +61,7 @@ class KeyStage2Screen extends StatelessWidget {
                 'Grades 3 and 4',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: Color(0xFFE26D5C),
+                  color: AppTheme.darkOrange,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -122,8 +123,8 @@ class KeyStage2Screen extends StatelessWidget {
                     sectionTitle: 'KS2 Comprehension',
                     sectionSubtitle:
                         'Challenge yourself with British texts for Grades 3 and 4.',
-                    accentColor: const Color(0xFF174A5B),
-                    pageColor: const Color(0xFFEAF4F6),
+                    accentColor: AppTheme.darkOrange,
+                    pageColor: AppTheme.veryLightOrange,
                     passages: ks2ComprehensionPassages.take(10).toList(),
                   ),
                 ),
@@ -140,8 +141,8 @@ class KeyStage2Screen extends StatelessWidget {
                     title: 'Intermediate Grammar',
                     description:
                         'Choose a 15-question grammar test for Grades 3 and 4.',
-                    accentColor: const Color(0xFF174A5B),
-                    backgroundColor: const Color(0xFFEAF4F6),
+                    accentColor: AppTheme.darkOrange,
+                    backgroundColor: AppTheme.veryLightOrange,
                     tests: ks2GrammarTests,
                   ),
                 ),
@@ -158,8 +159,8 @@ class KeyStage2Screen extends StatelessWidget {
                     title: 'Intermediate Listening Skills',
                     description:
                         'Listen to British-context passages and answer 10 MCQs plus 5 theory questions.',
-                    accentColor: const Color(0xFF174A5B),
-                    backgroundColor: const Color(0xFFEAF4F6),
+                    accentColor: AppTheme.darkOrange,
+                    backgroundColor: AppTheme.veryLightOrange,
                     exercises: ks2ListeningExercises,
                   ),
                 ),
@@ -176,7 +177,9 @@ class KeyStage2Screen extends StatelessWidget {
             style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFFE26D5C),
+            backgroundColor: title == 'My Progress & Awards' 
+                ? AppTheme.lemonGreen 
+                : AppTheme.primaryOrange,
             foregroundColor: Colors.white,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16),

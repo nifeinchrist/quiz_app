@@ -6,6 +6,7 @@ import '../models/question.dart';
 import '../config.dart';
 import '../progress_service.dart';
 import 'result_screen.dart';
+import '../app_theme.dart';
 
 class QuizScreen extends StatefulWidget {
   final String username;
@@ -192,19 +193,19 @@ class _QuizScreenState extends State<QuizScreen> {
   }
 
   Widget _buildLoading() {
-    return const Scaffold(
-      backgroundColor: Color(0xFFF4F5FB),
+    return Scaffold(
+      backgroundColor: AppTheme.veryLightOrange,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CircularProgressIndicator(color: Colors.deepPurple),
-            SizedBox(height: 20),
-            Text(
+            const CircularProgressIndicator(color: AppTheme.primaryOrange),
+            const SizedBox(height: 20),
+            const Text(
               'Loading questions…',
               style: TextStyle(
                 fontSize: 16,
-                color: Colors.deepPurple,
+                color: AppTheme.darkOrange,
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -216,7 +217,7 @@ class _QuizScreenState extends State<QuizScreen> {
 
   Widget _buildError() {
     return Scaffold(
-      backgroundColor: const Color(0xFFF4F5FB),
+      backgroundColor: AppTheme.veryLightOrange,
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(32.0),
@@ -240,7 +241,7 @@ class _QuizScreenState extends State<QuizScreen> {
                 icon: const Icon(Icons.refresh_rounded),
                 label: const Text('Try Again'),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.deepPurple,
+                  backgroundColor: AppTheme.primaryOrange,
                   foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(14),
@@ -260,7 +261,7 @@ class _QuizScreenState extends State<QuizScreen> {
     final progress = (_currentIndex + 1) / _sessionQuestions.length;
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF4F5FB),
+      backgroundColor: AppTheme.veryLightOrange,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -268,14 +269,14 @@ class _QuizScreenState extends State<QuizScreen> {
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back_ios_new_rounded,
-            color: Colors.deepPurple,
+            color: AppTheme.darkOrange,
           ),
           onPressed: () => _showExitDialog(context),
         ),
         title: Text(
           'Question ${_currentIndex + 1} of ${_sessionQuestions.length}',
           style: const TextStyle(
-            color: Colors.deepPurple,
+            color: AppTheme.darkOrange,
             fontWeight: FontWeight.bold,
             fontSize: 18,
           ),
@@ -292,9 +293,9 @@ class _QuizScreenState extends State<QuizScreen> {
                 child: LinearProgressIndicator(
                   value: progress,
                   minHeight: 10,
-                  backgroundColor: Colors.deepPurple.shade100,
+                  backgroundColor: AppTheme.lightOrange,
                   valueColor: const AlwaysStoppedAnimation<Color>(
-                    Colors.deepPurple,
+                    AppTheme.lemonGreen,
                   ),
                 ),
               ),
@@ -317,14 +318,14 @@ class _QuizScreenState extends State<QuizScreen> {
                           vertical: 6,
                         ),
                         decoration: BoxDecoration(
-                          color: Colors.deepPurple.shade50,
+                          color: AppTheme.lightOrange,
                           borderRadius: BorderRadius.circular(20),
-                          border: Border.all(color: Colors.deepPurple.shade200),
+                          border: Border.all(color: AppTheme.mediumOrange),
                         ),
                         child: Text(
                           '🏷️ ${question.category}',
-                          style: TextStyle(
-                            color: Colors.deepPurple.shade800,
+                          style: const TextStyle(
+                            color: AppTheme.darkOrange,
                             fontWeight: FontWeight.bold,
                             fontSize: 13,
                           ),
@@ -452,7 +453,7 @@ class _QuizScreenState extends State<QuizScreen> {
                   child: ElevatedButton(
                     onPressed: _nextQuestion,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.deepPurple,
+                      backgroundColor: AppTheme.primaryOrange,
                       foregroundColor: Colors.white,
                       elevation: 4,
                       shape: RoundedRectangleBorder(
@@ -558,10 +559,10 @@ class _QuizScreenState extends State<QuizScreen> {
                   height: 36,
                   decoration: BoxDecoration(
                     color: _hasAnswered && index == correctIndex
-                        ? Colors.green
+                        ? AppTheme.lemonGreen
                         : (_hasAnswered && index == _selectedAnswerIndex
                               ? Colors.red
-                              : Colors.deepPurple.shade50),
+                              : AppTheme.lightOrange),
                     shape: BoxShape.circle,
                   ),
                   child: Center(
@@ -575,7 +576,7 @@ class _QuizScreenState extends State<QuizScreen> {
                                 (index == correctIndex ||
                                     index == _selectedAnswerIndex)
                             ? Colors.white
-                            : Colors.deepPurple,
+                            : AppTheme.darkOrange,
                       ),
                     ),
                   ),

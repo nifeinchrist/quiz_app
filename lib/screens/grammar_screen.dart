@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../data/ks1_grammar_data.dart';
+import '../data/beginner_grammar_data.dart';
 import '../progress_service.dart';
 
 const _grammarColor = Color(0xFFE09F3E);
@@ -17,7 +17,7 @@ class GrammarScreen extends StatefulWidget {
     super.key,
     required this.username,
     this.keyStage = 'KS1',
-    this.title = 'Key Stage 1 Grammar',
+    this.title = 'Beginner Grammar',
     this.description = 'Select a test for Grades 1 and 2.',
     this.accentColor = _grammarColor,
     this.backgroundColor = const Color(0xFFFFF8E8),
@@ -115,7 +115,7 @@ class GrammarTestScreen extends StatefulWidget {
     required this.username,
     required this.testNumber,
     this.keyStage = 'KS1',
-    this.title = 'Key Stage 1 Grammar',
+    this.title = 'Beginner Grammar',
     this.accentColor = _grammarColor,
     this.backgroundColor = const Color(0xFFFFF8E8),
     this.tests = ks1GrammarTests,

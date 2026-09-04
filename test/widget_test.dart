@@ -17,9 +17,12 @@ void main() {
     expect(find.text('English Fun Quiz!'), findsOneWidget);
 
     await tester.enterText(find.byType(TextFormField), 'Alex');
-    await tester.tap(find.text('Key Stage 1'));
+    await tester.tap(find.text('Beginner'));
 
     expect(find.text('Grades 1 and 2'), findsOneWidget);
-    expect(find.text('Key Stage 2'), findsOneWidget);
+    expect(find.text('Intermediate'), findsOneWidget);
+    expect(find.text('Grades 3 and 4'), findsOneWidget);
+    expect(find.text('Advanced'), findsOneWidget);
+    expect(find.text('Grades 5 and 6'), findsOneWidget);
   });
 }

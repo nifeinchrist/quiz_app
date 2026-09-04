@@ -1,4 +1,4 @@
-import 'ks1_grammar_data.dart';
+import 'beginner_grammar_data.dart';
 
 GrammarQuestion _q(String question, List<String> options, int answerIndex) =>
     GrammarQuestion(

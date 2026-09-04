@@ -1,4 +1,4 @@
-import 'ks1_comprehension_data.dart';
+import 'beginner_comprehension_data.dart';
 
 const ks2ComprehensionPassages = <ComprehensionPassage>[
   ComprehensionPassage(
